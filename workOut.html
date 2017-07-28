@@ -1,0 +1,101 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Workout Jquery App</title>
+
+    <link rel="stylesheet" href="/SF.code/projects/workout-app-Jquery/bootstrap.css">
+    <link rel="stylesheet" href="/SF.code/projects/workout-app-Jquery/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="/SF.code/projects/workout-app-Jquery/FlipClock-master/compiled/flipclock.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#hideDiv").click(function () {
+                $(".jumbotron").addClass("hidden")
+                $("#workOut").removeClass("hidden")
+                countdown()
+            })
+        });
+
+        function countdown() {
+            var beepSound = document.createElement('audio');
+            beepSound.setAttribute('src', 'https://www.soundjay.com/button/sounds/button-3.mp3');
+
+            var counter = 4;
+            var countdown = setInterval(function () {
+                $(".clock").text(--counter);
+                beepSound.play();
+                if (counter == 0) {
+                    clearInterval(countdown);
+                    go();
+                }
+            }, 1000);
+        }
+
+        function go() {
+            $(".clock").addClass("hidden");
+            $("#begin").removeClass("hidden");
+            setTimeout(clock, 1000)
+        }
+
+        function clock() {
+            $(".starting-motto").addClass("hidden")
+            $("#begin").addClass("hidden");
+            $(".clock").removeClass("hidden");
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', 'https://www.soundjay.com/clock/sounds/clock-ticking-1.mp3');
+            var start = new Date;
+            var timesRun = 0;
+
+            var interval = setInterval(function () {
+                $('.clock').text(Math.round((new Date - start) / 1000));
+                audioElement.play();
+                timesRun += 1;
+                if (timesRun === 30) {
+                    clearInterval(interval);
+                    audioElement.pause();
+                }
+            }, 1000);
+
+        }
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="navbar-brand">Jquery Workout Application</div>
+                </div>
+
+            </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="text-center jumbotron">
+            <h1>Start Workout</h1>
+            <button id="hideDiv" class="btn-lg btn btn-success">Start Workout</button>
+        </div>
+
+        <div id="workOut" class="text-center jumbotron hidden">
+            <div class="starting-motto">Get ready to plank in</div>
+            <div id="clock" class="clock font-size-74"></div>
+            <div id="begin" class="hidden font-size-74">Begin</div>
+                <img id="plank" src="/SF.code/projects/workout-app-Jquery/images/plank.jpg">
+                <div class="font-size-74">Hold a Plank for 30 Seconds</div>
+        </div>
+
+    </div>
+</body>
+
+</html>
